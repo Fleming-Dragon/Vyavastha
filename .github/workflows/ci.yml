@@ -11,14 +11,15 @@ jobs:
     name: Build Web
     runs-on: ubuntu-latest
     defaults:
-      working-directory: ./Vyavastha_Web
+      run:
+        working-directory: ./Vyavastha_Web
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20  # ✅ Fix: correct key is `node-version`
+          node-version: 20
 
       - name: Install Dependencies
         run: npm install
@@ -30,7 +31,8 @@ jobs:
     name: Build Mobile
     runs-on: ubuntu-latest
     defaults:
-      working-directory: ./vyavastha
+      run:
+        working-directory: ./vyavastha
     steps:
       - uses: actions/checkout@v3
 
