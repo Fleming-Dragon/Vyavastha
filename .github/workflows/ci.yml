@@ -1,0 +1,51 @@
+name: Vyavastha Build Check
+
+on:
+  push:
+    branches: [main, dev, beta, gamma]
+  pull_request:
+    branches: [main, dev, beta, gamma]
+
+jobs:
+  build-web:
+    name: Build Web
+    runs-on: ubuntu-latest
+    defaults:
+      working-directory: ./Vyavastha_Web
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20  # ✅ Fix: correct key is `node-version`
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Web App
+        run: npm run build
+
+  build-mobile:
+    name: Build Mobile
+    runs-on: ubuntu-latest
+    defaults:
+      working-directory: ./vyavastha
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Install Expo CLI
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+
+      - name: Run Expo Doctor
+        run: npx expo-doctor --verbose
